@@ -27,5 +27,5 @@ public class User {
 
     @ElementCollection(fetch = FetchType.EAGER) //so that jpa creates another table for us
     @Enumerated(EnumType.STRING)
-    private Set<Role> role;
+    private Set<Role> roles;
 }
