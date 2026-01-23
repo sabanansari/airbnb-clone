@@ -1,6 +1,7 @@
 package com.ansari.projects.airBnbApp.service;
 
 import com.ansari.projects.airBnbApp.dto.HotelDto;
+import com.ansari.projects.airBnbApp.dto.HotelInfoDto;
 import com.ansari.projects.airBnbApp.entity.Hotel;
 
 public interface HotelService {
@@ -15,4 +16,5 @@ public interface HotelService {
 
     void activateHotel(Long id);
 
+    HotelInfoDto getHotelInfo(Long hotelId);
 }
