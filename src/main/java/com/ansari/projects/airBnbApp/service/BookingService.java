@@ -3,6 +3,7 @@ package com.ansari.projects.airBnbApp.service;
 import com.ansari.projects.airBnbApp.dto.BookingDto;
 import com.ansari.projects.airBnbApp.dto.BookingRequest;
 import com.ansari.projects.airBnbApp.dto.GuestDto;
+import com.stripe.model.Event;
 import org.jspecify.annotations.Nullable;
 
 import java.util.List;
@@ -12,4 +13,10 @@ public interface BookingService {
     BookingDto initializeBooking(BookingRequest bookingRequest);
 
     @Nullable BookingDto addGuests(Long bookingId, List<GuestDto> guestDtoList);
+
+    String initiatePayments(Long bookingId);
+
+    void capturePayment(Event event);
+
+    void cancelBooking(Long bookingId);
 }
