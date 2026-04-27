@@ -8,6 +8,7 @@ import com.ansari.projects.airBnbApp.exception.ResourceNotFoundException;
 import com.ansari.projects.airBnbApp.exception.UnauthorizedException;
 import com.ansari.projects.airBnbApp.repository.HotelRepository;
 import com.ansari.projects.airBnbApp.repository.RoomRepository;
+import com.ansari.projects.airBnbApp.util.AppUtils;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -106,7 +107,34 @@ public class RoomServiceImpl implements RoomService{
         inventoryService.deleteAllInventories(room);
         roomRepository.deleteById(roomId);
 
-        //TODO: delete all future inventories for this room
 
+    }
+
+    @Override
+    public RoomDto updateRoomById(Long hotelId, Long roomId, RoomDto roomDto) {
+
+        log.info("Updating room with id:"+roomId);
+
+        Hotel hotel = hotelRepository
+                .findById(hotelId)
+                .orElseThrow(() -> new ResourceNotFoundException("Hotel not found with ID:"+hotelId));
+
+        User user = AppUtils.getCurrentUser();
+
+        if(!user.equals(hotel.getOwner())){
+            throw new UnauthorizedException("This user does not own this hotel with id:"+hotelId);
+        }
+
+        Room room = roomRepository.findById(roomId).orElseThrow(() -> new ResourceNotFoundException("Room not found with ID:"+roomId));
+
+        modelMapper.map(roomDto,room);
+
+        room.setId(roomId);
+
+        //TODO: If price or inventory is updated, then update the inverntory for this room
+
+        room = roomRepository.save(room);
+
+        return modelMapper.map(room,RoomDto.class);
     }
 }

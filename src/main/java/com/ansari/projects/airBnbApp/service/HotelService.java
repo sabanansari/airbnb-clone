@@ -4,6 +4,8 @@ import com.ansari.projects.airBnbApp.dto.HotelDto;
 import com.ansari.projects.airBnbApp.dto.HotelInfoDto;
 import com.ansari.projects.airBnbApp.entity.Hotel;
 
+import java.util.List;
+
 public interface HotelService {
 
     HotelDto createNewHotel(HotelDto hotelDto);
@@ -17,4 +19,6 @@ public interface HotelService {
     void activateHotel(Long id);
 
     HotelInfoDto getHotelInfo(Long hotelId);
+
+    List<HotelDto> getAllHotels();
 }

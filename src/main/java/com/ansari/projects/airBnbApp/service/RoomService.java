@@ -2,6 +2,7 @@ package com.ansari.projects.airBnbApp.service;
 
 import com.ansari.projects.airBnbApp.dto.RoomDto;
 import com.ansari.projects.airBnbApp.entity.Room;
+import org.jspecify.annotations.Nullable;
 
 import java.util.List;
 
@@ -14,4 +15,6 @@ public interface RoomService {
     RoomDto getRoomById(Long roomId);
 
     void deleteRoomById(Long roomId);
+
+    RoomDto updateRoomById(Long hotelId, Long roomId, RoomDto roomDto);
 }

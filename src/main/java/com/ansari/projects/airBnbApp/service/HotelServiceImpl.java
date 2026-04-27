@@ -10,6 +10,7 @@ import com.ansari.projects.airBnbApp.exception.ResourceNotFoundException;
 import com.ansari.projects.airBnbApp.exception.UnauthorizedException;
 import com.ansari.projects.airBnbApp.repository.HotelRepository;
 import com.ansari.projects.airBnbApp.repository.RoomRepository;
+import com.ansari.projects.airBnbApp.util.AppUtils;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -139,5 +140,13 @@ public class HotelServiceImpl implements HotelService{
                 .toList();
         return new HotelInfoDto(modelMapper.map(hotel, HotelDto.class), rooms);
 
+    }
+
+    @Override
+    public List<HotelDto> getAllHotels() {
+        User user = AppUtils.getCurrentUser();
+        log.info("Getting all hotels for admin user with id:{}",user.getId());
+        List<Hotel> hotels = hotelRepository.findByOwner(user);
+        return hotels.stream().map(hotel -> modelMapper.map(hotel, HotelDto.class)).toList();
     }
 }

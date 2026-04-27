@@ -36,8 +36,16 @@ public class HotelBookingController {
     }
 
     @PostMapping("/{bookingId}/cancel")
-    public ResponseEntity<Map<String, String>> cancelBooking(@PathVariable Long bookingId){
+    public ResponseEntity<Void> cancelBooking(@PathVariable Long bookingId){
         bookingService.cancelBooking(bookingId);
         return ResponseEntity.noContent().build();
     }
+
+    @PostMapping("/{bookingId}/status")
+    public ResponseEntity<Map<String, String>> getBookingStatus(@PathVariable Long bookingId){
+
+        return ResponseEntity.ok(Map.of("status", bookingService.getBookingStatus(bookingId)));
+    }
+
+
 }
